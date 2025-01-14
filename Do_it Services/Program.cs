@@ -1,9 +1,17 @@
+using Doit.Core.Application.Interfaces.Repository.Boards;
+using Doit.Core.Application.Interfaces.Service.Boards;
 using Doit.Infrastructure.Database;
+using Doit.Infrastructure.Repositories.Boards;
+using Doit.Infrastructure.Services.Boards;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 // Add services to the container.
+builder.Services.AddScoped<IBoardsService, BoardsService>();
+builder.Services.AddScoped<IBoardsRepo, BoardsRepo>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -17,9 +25,20 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    app.UseCors(builder => builder
+    .WithOrigins("http://localhost:4200") // Replace with your Angular app's URL
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    );
+    //app.UseCors(builder => builder
+    //.WithOrigins("*")
+    //.AllowAnyMethod()
+    //.AllowAnyHeader()
+    //);
 }
 
-builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
 app.UseHttpsRedirection();
 
