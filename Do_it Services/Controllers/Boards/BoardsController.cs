@@ -38,7 +38,7 @@ namespace Do_it_Services.Controllers.Boards
             return Ok(returnModel);
         }
 
-        [HttpPut]
+        [HttpPut("UpdateBoardName")]
         public async Task<IActionResult> UpdateBoardName(BoardsReqDTO.UpdateBoardReq boardReq)
         {
             var response = await _boardsService.UpdateBoardName(boardReq);
