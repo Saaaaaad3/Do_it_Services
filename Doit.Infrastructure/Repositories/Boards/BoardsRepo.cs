@@ -22,9 +22,7 @@ namespace Doit.Infrastructure.Repositories.Boards
         }
         public async Task<int> AddBoardAsync(BoardEntity boardReq)
         {
-            boardReq.CreatedDate = DateTime.Now;
-            boardReq.ModifiedDate = DateTime.Now;
-            var DBResponse = await _context.Boards.AddAsync(boardReq);
+            await _context.Boards.AddAsync(boardReq);
             _context.SaveChanges();
             return 200;
 
@@ -33,10 +31,14 @@ namespace Doit.Infrastructure.Repositories.Boards
         public async Task<int> UpdateBoardName(BoardEntity boardReq)
         {
             var board = await _context.Boards.FirstOrDefaultAsync(b => b.BoardId == boardReq.BoardId);
-            board.ModifiedDate = DateTime.Now;
 
-            board.BoardName = boardReq.BoardName;
-            _context.SaveChanges();
+            if (board != null)
+            {
+                board.ModifiedDate = DateTime.Now;
+                board.BoardName = boardReq.BoardName;
+                _context.SaveChanges();
+            }
+
             return 200;
 
         }

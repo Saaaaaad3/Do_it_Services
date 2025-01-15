@@ -31,8 +31,10 @@ namespace Doit.Infrastructure.Services.Boards
         {
             BoardEntity DBRequest = new BoardEntity
             {
+                UserId = boardReq.UserId,
                 BoardName = boardReq.BoardName,
-                UserId = boardReq.UserId
+                CreatedDate = DateTime.Now,
+                ModifiedDate= DateTime.Now
             };
 
             var addResult = await _boardsRepo.AddBoardAsync(DBRequest);
@@ -55,7 +57,7 @@ namespace Doit.Infrastructure.Services.Boards
 
         public async Task<int> RemoveBoard(long boardId)
         {
-            var addResult = await _boardsRepo.RemoveBoard(boardId);
+            await _boardsRepo.RemoveBoard(boardId);
             return 200;
         }
 
