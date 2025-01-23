@@ -1,11 +1,15 @@
 using Doit.Core.Application.Interfaces.Repository;
 using Doit.Core.Application.Interfaces.Repository.Boards;
+using Doit.Core.Application.Interfaces.Repository.TaskCards;
 using Doit.Core.Application.Interfaces.Service.Boards;
+using Doit.Core.Application.Interfaces.Service.TaskCards;
 using Doit.Core.Application.Interfaces.Service.TaskLists;
 using Doit.Infrastructure.Database;
 using Doit.Infrastructure.Repositories.Boards;
+using Doit.Infrastructure.Repositories.TaskCards;
 using Doit.Infrastructure.Repositories.TaskLists;
 using Doit.Infrastructure.Services.Boards;
+using Doit.Infrastructure.Services.TaskCards;
 using Doit.Infrastructure.Services.TaskLists;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,8 +20,12 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(buil
 // Add services to the container.
 builder.Services.AddScoped<IBoardsService, BoardsService>();
 builder.Services.AddScoped<IBoardsRepo, BoardsRepo>();
+
 builder.Services.AddScoped<ITaskListService, TaskListService>();
 builder.Services.AddScoped<ITaskListRepo, TaskListRepo>();
+
+builder.Services.AddScoped<ITaskCardService, TaskCardService>();
+builder.Services.AddScoped<ITaskCardRepo, TaskCardRepo>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
