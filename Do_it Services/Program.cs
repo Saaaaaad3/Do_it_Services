@@ -1,16 +1,20 @@
 using Doit.Core.Application.Interfaces.Repository;
 using Doit.Core.Application.Interfaces.Repository.Boards;
 using Doit.Core.Application.Interfaces.Repository.TaskCards;
+using Doit.Core.Application.Interfaces.Repository.User;
 using Doit.Core.Application.Interfaces.Service.Boards;
 using Doit.Core.Application.Interfaces.Service.TaskCards;
 using Doit.Core.Application.Interfaces.Service.TaskLists;
+using Doit.Core.Application.Interfaces.Service.User;
 using Doit.Infrastructure.Database;
+using Doit.Infrastructure.Repositories;
 using Doit.Infrastructure.Repositories.Boards;
 using Doit.Infrastructure.Repositories.TaskCards;
 using Doit.Infrastructure.Repositories.TaskLists;
 using Doit.Infrastructure.Services.Boards;
 using Doit.Infrastructure.Services.TaskCards;
 using Doit.Infrastructure.Services.TaskLists;
+using Doit.Infrastructure.Services.User;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,6 +30,9 @@ builder.Services.AddScoped<ITaskListRepo, TaskListRepo>();
 
 builder.Services.AddScoped<ITaskCardService, TaskCardService>();
 builder.Services.AddScoped<ITaskCardRepo, TaskCardRepo>();
+
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserRepo, UserRepo>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
