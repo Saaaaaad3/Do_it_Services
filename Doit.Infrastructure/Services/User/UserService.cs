@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static Doit.Core.Application.DTO.User.RequestModel.UserReqModel;
+using static Doit.Core.Application.DTO.User.ResponseModel.UserResModel;
+using Doit.Infrastructure.Extension_Methods;
 
 namespace Doit.Infrastructure.Services.User
 {
@@ -19,7 +21,7 @@ namespace Doit.Infrastructure.Services.User
             _repo = userRepo;
         }
 
-        public async Task<int> Login(UserReqModel.LoginReq loginLequest)
+        public async Task<LoginRes> Login(UserReqModel.LoginReq loginLequest)
         {
             UserEntity dbReq = new UserEntity
             {
@@ -27,7 +29,13 @@ namespace Doit.Infrastructure.Services.User
                 Password = loginLequest.Password,
             };
 
-            var response = await _repo.Login(dbReq);
+            var userIdFromDb = await _repo.Login(dbReq);
+
+            LoginRes response = new LoginRes()
+            {
+                UserId = userIdFromDb == null ? 0 : Convert.ToInt32(userIdFromDb),
+                Token = userIdFromDb.GenerateToken()
+            };
 
             return response;
         }

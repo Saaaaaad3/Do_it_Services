@@ -19,15 +19,15 @@ namespace Doit.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<int> Login(UserEntity userDbReq)
+        public async Task<long?> Login(UserEntity userDbReq)
         {
-            bool existingUsername = await _context.Users.AnyAsync(u => u.Username == userDbReq.Username && u.Password == userDbReq.Password);
+            long? existingUserId = await _context.Users.Where(u => u.Username == userDbReq.Username && u.Password == userDbReq.Password).Select(user=>user.UserId).FirstOrDefaultAsync();
 
-            if (!existingUsername)
+            if (existingUserId == null)
             {
-                return 0;
+                return null;
             }
-            return 200;
+            return existingUserId;
         }
 
         public async Task<int> Register(UserEntity userDbReq)
