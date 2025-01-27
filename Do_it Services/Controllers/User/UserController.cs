@@ -19,11 +19,14 @@ namespace Do_it_Services.Controllers.User
             var response = await _userService.Register(registerReq);
             return Ok(new { resultCode = response });
         }
+        
         [HttpGet("Login")]
         public async Task<IActionResult> Login(LoginReq loginReq)
         {
             var response = await _userService.Login(loginReq);
-            return Ok(new { resultCode = response });
+            
+            return Ok(response); 
         }
+
     }
 }

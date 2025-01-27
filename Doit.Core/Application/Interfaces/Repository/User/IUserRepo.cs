@@ -10,6 +10,6 @@ namespace Doit.Core.Application.Interfaces.Repository.User
     public interface IUserRepo
     {
         Task<int> Register(UserEntity userDbReq);
-        Task<int> Login(UserEntity userDbReq);
+        Task<long?> Login(UserEntity userDbReq);
     }
 }
